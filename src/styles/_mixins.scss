@@ -1,0 +1,96 @@
+// ============================================
+// Mixins — Design System Neumorphique
+// Domaine de Valdor
+// ============================================
+
+@use 'variables' as *;
+
+/// Mixin principal : effet neumorphique (Soft UI)
+/// @param {String} $type - 'out' pour extrusion, 'in' pour enfoncement, 'flat' pour plat
+/// @param {Number} $distance - intensité des ombres (défaut 8px)
+/// @param {Number} $blur - flou des ombres (défaut 16px)
+@mixin neumorphism($type: 'out', $distance: 8px, $blur: 16px) {
+  @if $type == 'out' {
+    box-shadow:
+      $distance $distance $blur $color-shadow-dark,
+      (-$distance) (-$distance) $blur $color-shadow-light;
+  } @else if $type == 'in' {
+    box-shadow:
+      inset $distance $distance $blur $color-shadow-dark,
+      inset (-$distance) (-$distance) $blur $color-shadow-light;
+  } @else if $type == 'flat' {
+    box-shadow:
+      3px 3px ($blur * 0.5) $color-shadow-dark,
+      -3px -3px ($blur * 0.5) $color-shadow-light;
+  }
+  background: $bg-color;
+  border-radius: $radius-lg;
+}
+
+/// Mixin : effet verre (glassmorphism) pour les badges flottants
+@mixin glassmorphism() {
+  background: $color-glass-bg;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid $color-glass-border;
+  border-radius: $radius-md;
+}
+
+/// Mixin : centrage flexbox
+@mixin flex-center($direction: row) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: $direction;
+}
+
+/// Mixin : responsive
+/// @param {String} $breakpoint - 'sm', 'md', 'lg', 'xl'
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (max-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: $breakpoint-xl) { @content; }
+  }
+}
+
+/// Mixin : bouton neumorphique interactif
+@mixin neumorphic-button($size: 60px) {
+  width: $size;
+  height: $size;
+  border-radius: $radius-round;
+  border: none;
+  cursor: pointer;
+  @include neumorphism('out', 6px, 12px);
+  @include flex-center();
+  transition: box-shadow $transition-base, transform $transition-base;
+
+  &:hover {
+    @include neumorphism('flat', 4px, 8px);
+    transform: scale(0.97);
+  }
+
+  &:active,
+  &--pressed {
+    @include neumorphism('in', 4px, 8px);
+    transform: scale(0.95);
+  }
+}
+
+/// Mixin : texte tronqué
+@mixin text-truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

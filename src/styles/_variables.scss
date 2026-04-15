@@ -1,0 +1,75 @@
+// ============================================
+// Variables globales — Design System Neumorphique
+// Domaine de Valdor
+// ============================================
+
+// --- Couleurs de fond ---
+$bg-color: #e8ecf1;
+$bg-color-light: #f0f3f6;
+
+// --- Couleurs d'accent ---
+$color-primary: #722F37;        // Rouge bordeaux profond
+$color-primary-light: #8b3a44;
+$color-primary-dark: #5a252c;
+
+// --- Couleurs de texte ---
+$text-dark: #2d3436;
+$text-medium: #636e72;
+$text-light: #b2bec3;
+
+// --- Couleurs pour le neumorphisme ---
+$color-shadow-dark: #c8ccd1;
+$color-shadow-light: #ffffff;
+$color-shadow-dark-strong: #b8bcc1;
+
+// --- Couleurs utilitaires ---
+$color-white: #ffffff;
+$color-divider: #dfe6e9;
+$color-glass-bg: rgba(255, 255, 255, 0.15);
+$color-glass-border: rgba(255, 255, 255, 0.25);
+
+// --- Typographie ---
+$font-serif: 'Playfair Display', Georgia, serif;
+$font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+$font-size-xs: 0.75rem;    // 12px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px
+$font-size-md: 1.125rem;   // 18px
+$font-size-lg: 1.5rem;     // 24px
+$font-size-xl: 2rem;       // 32px
+$font-size-2xl: 2.5rem;    // 40px
+$font-size-3xl: 3rem;      // 48px
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// --- Espacement ---
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-2xl: 3rem;
+$spacing-3xl: 4rem;
+
+// --- Border Radius ---
+$radius-sm: 8px;
+$radius-md: 16px;
+$radius-lg: 24px;
+$radius-xl: 32px;
+$radius-round: 50%;
+
+// --- Breakpoints ---
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// --- Transitions ---
+$transition-fast: 0.2s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
