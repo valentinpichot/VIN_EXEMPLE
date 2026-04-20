@@ -83,10 +83,16 @@ onMounted(() => {
 
     // 4. Le bloc titre apparaît
     .fromTo(
-      titleBlock.value,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5 },
-      '-=0.2'
+      '.hero-widget__overlay-content',
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
+      '-=0.4'
+    )
+    .fromTo(
+      ['.hero-widget__appellation', '.hero-widget__separator', '.hero-widget__title', '.hero-widget__tagline'],
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: 'power2.out' },
+      '-=0.6'
     )
 
     // 5. Les statistiques apparaissent en stagger
@@ -122,17 +128,33 @@ const setStatsRef = (el: any, index: number) => {
       <!-- Overlay gradient sombre -->
       <div class="hero-widget__overlay" ref="heroOverlay"></div>
 
-      <!-- Contenu textuel sur l'image -->
+      <!-- Contenu textuel sur l'image (Magnifié) -->
       <div class="hero-widget__overlay-content">
-        <p class="hero-widget__appellation">AOC Saint-Émilion Grand Cru</p>
+        <p class="hero-widget__appellation">
+          <span class="hero-widget__dot"></span>
+          AOC Saint-Émilion Grand Cru
+          <span class="hero-widget__dot"></span>
+        </p>
+
+        <div class="hero-widget__separator">
+          <span class="hero-widget__line"></span>
+          <span class="hero-widget__diamond">◆</span>
+          <span class="hero-widget__line"></span>
+        </div>
+
         <h1 class="hero-widget__title">Domaine de Valdor</h1>
         <p class="hero-widget__tagline">L'excellence en héritage depuis 1952</p>
       </div>
 
-      <!-- Badge prix flottant glassmorphique -->
+      <!-- Badge prix flottant glassmorphique (Magnifié) -->
       <div class="hero-widget__badge" ref="badge">
+        <div class="hero-widget__badge-shine"></div>
         <span class="hero-widget__badge-label">Dégustation Prestige</span>
         <span class="hero-widget__badge-price">120€</span>
+        <div class="hero-widget__badge-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <span class="hero-widget__badge-note">Sélection 2024</span>
       </div>
     </div>
 
@@ -264,40 +286,84 @@ const setStatsRef = (el: any, index: number) => {
     z-index: 1;
   }
 
-  // Contenu textuel au-dessus de l'image
+  // Contenu textuel au-dessus de l'image (Stylisé Prestige)
   &__overlay-content {
     position: absolute;
-    bottom: $spacing-xl;
+    bottom: $spacing-2xl;
     left: $spacing-xl;
     z-index: 2;
     color: $color-white;
+    max-width: 500px;
+    padding: $spacing-lg;
+    
+    // Voile glassmorphique localisé pour la lisibilité
+    @include glassmorphism();
+    background: rgba(0, 0, 0, 0.1); 
+    border: none;
+    border-radius: $radius-lg;
 
     @include respond-to('md') {
       bottom: $spacing-lg;
       left: $spacing-lg;
+      padding: $spacing-md;
     }
   }
 
   &__appellation {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
     font-family: $font-sans;
-    font-size: $font-size-xs;
+    font-size: 0.65rem;
     font-weight: $font-weight-medium;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    opacity: 0.85;
-    margin-bottom: $spacing-xs;
+    color: #d4af7a; // Or Heritage
+    margin-bottom: $spacing-sm;
+  }
+
+  &__dot {
+    width: 4px;
+    height: 4px;
+    background: #d4af7a;
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+
+  &__separator {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+    opacity: 0.6;
+  }
+
+  &__line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, #d4af7a, transparent);
+    
+    &:last-child {
+      background: linear-gradient(to left, #d4af7a, transparent);
+    }
+  }
+
+  &__diamond {
+    font-size: 0.5rem;
+    color: #d4af7a;
   }
 
   &__title {
-    font-family: $font-serif;
-    font-size: $font-size-2xl;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
     font-weight: $font-weight-bold;
     color: $color-white;
-    margin-bottom: $spacing-xs;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    line-height: 1.1;
+    margin-bottom: $spacing-sm;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 
     @include respond-to('md') {
-      font-size: $font-size-xl;
+      font-size: 2.2rem;
     }
   }
 
@@ -309,40 +375,91 @@ const setStatsRef = (el: any, index: number) => {
     font-weight: $font-weight-light;
   }
 
-  // --- Badge glassmorphique flottant ---
+  // --- Badge glassmorphique flottant (Style Médaille) ---
   &__badge {
-    @include glassmorphism();
     position: absolute;
     bottom: $spacing-lg;
     right: $spacing-lg;
-    z-index: 3;
-    padding: $spacing-sm $spacing-md;
+    z-index: 5;
+    padding: $spacing-md $spacing-lg;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2px;
     color: $color-white;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    
+    // Background prestige (Bordeaux dépoli)
+    @include glassmorphism();
+    background: rgba(114, 47, 55, 0.45);
+    border: 1px solid rgba(212, 175, 122, 0.4);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.3),
+      inset 0 0 10px rgba(212, 175, 122, 0.1);
+    
+    border-radius: $radius-md;
+    overflow: hidden;
+    min-width: 150px;
 
     @include respond-to('md') {
       bottom: $spacing-md;
       right: $spacing-md;
-      padding: $spacing-xs $spacing-sm;
+      padding: $spacing-sm $spacing-md;
+      min-width: 130px;
     }
+  }
+
+  &__badge-shine {
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(
+      45deg,
+      transparent 45%,
+      rgba(255, 255, 255, 0.25) 50%,
+      transparent 55%
+    );
+    animation: badgeShine 6s infinite ease-in-out;
+    pointer-events: none;
+  }
+
+  @keyframes badgeShine {
+    0% { transform: translate(-30%, -30%) rotate(0deg); }
+    20%, 100% { transform: translate(30%, 30%) rotate(0deg); }
   }
 
   &__badge-label {
     font-family: $font-sans;
-    font-size: $font-size-xs;
+    font-size: 0.6rem;
     font-weight: $font-weight-medium;
-    letter-spacing: 0.5px;
-    opacity: 0.9;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #d4af7a;
   }
 
   &__badge-price {
-    font-family: $font-serif;
-    font-size: $font-size-lg;
+    font-family: 'Playfair Display', serif;
+    font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
+    line-height: 1.1;
+  }
+
+  &__badge-stars {
+    display: flex;
+    gap: 2px;
+    color: #d4af7a;
+    font-size: 0.7rem;
+    margin: 2px 0;
+  }
+
+  &__badge-note {
+    font-family: $font-sans;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    color: $color-white;
   }
 
   // --- Panneau d'informations ---
